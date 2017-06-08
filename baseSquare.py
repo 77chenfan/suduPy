@@ -5,14 +5,9 @@ Created on Thu Jun 08 11:38:22 2017
 @author: u6035034
 """    
         
-import square
+import square as sq
 
-class baseSquare(square):
-    def __init__(self):
-        self.value=0
-        self.pox=0
-        self.poy=0
-        self.possibleValue=[1,2,3,4,5,6,7,8,9]
+class baseSquare(sq.square):
     def setValue(self,v):
         assert (v<10 and v>0),"please set a number between 1-9"
         self.value = v
