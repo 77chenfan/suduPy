@@ -40,6 +40,7 @@ class Sudo(object):
                 v=int(n)
                 blocknum=j/3+(i/3)*3
                 one.setPosition((i+1,j+1))
+                posvalue={}
                 if(v!=0):
                     one.setValue(v)
                     self.rowsquare[i].addPossibleValue(v)
@@ -48,7 +49,7 @@ class Sudo(object):
                     self.count=self.count+1
                     self.basecount =self.basecount+1
                 else:
-                    posvalue=self.rowsquare[i].getPossibleValue()
+                    posvalue=copy.copy(self.rowsquare[i].getPossibleValue())
                     posvalue.update(self.colunmsquare[j].getPossibleValue())
                     posvalue.update(self.blocksquare[blocknum].getPossibleValue())
                     one.delPossibleValue(posvalue.keys())
@@ -68,7 +69,7 @@ class Sudo(object):
         self.printInfo()
     def startGame(self):
         time=0
-        run=1
+        run=2
         while(run):
             run=run-1
             if(self.count >self.basecount):
@@ -83,6 +84,7 @@ class Sudo(object):
             for j in range(9):
                 v=self.basesquare[i][j].getValue()
                 blocknum=j/3+(i/3)*3
+                pvs=self.rowsquare[2].getPossibleValue()
                 posvalue={}
                 if(v!=0):
                     self.rowsquare[i].addPossibleValue(v)
