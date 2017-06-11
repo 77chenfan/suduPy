@@ -4,13 +4,11 @@ Created on Thu Jun 08 14:53:57 2017
 
 @author: u6035034
 """
-
-import baseSquare as bs
-
+import Sudo as sd
 
 if __name__ == "__main__":
-    one =bs.baseSquare()
-    a=[1,2,3,4,5,6,7,8]
-    one.removePossibleValue(a)
-    print one.getPossibleValue()
-    print one.getValue()
+    mysd = sd.Sudo()    
+    mysd.initSuDu("example001.csv")
+    print mysd.rowsquare[0].getPossibleValue()
+    mysd.startGame()
+    mysd.printInfo()

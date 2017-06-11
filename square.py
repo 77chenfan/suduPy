@@ -18,36 +18,40 @@ class square(object):
     def setPox(self,x):
         self.pox = x
     def setPoy(self,y):
-        self.pox = y
+        self.poy = y
     def setPosition(self,p):
         (x,y)=p
         self.setPox(x)
         self.setPoy(y)    
     def getPos(self):
         return (self.pox,self.poy)  
-    def updatePossibleValue(self,ps):
-        for k in ps.keys:
-            assert (k<10 and k>0),"please set number between 1 to 9"
-            assert (ps[k]==0 or ps[k]==1), "value only support 1 or 0"
-        self.possibleValue.update(ps)
-        self.__updatePossibleValue()
+    def addPossibleValue(self,ps):
+        if(type(ps)==list):
+            for k in ps:
+                assert (k<10 and k>0), "please add number between 1 to 9"
+                self.possibleValue.update({k:1})
+        elif(type(ps)== int):
+            assert (ps<10 and ps>0), "please add number between 1 to 9"
+            self.possibleValue.update({ps:1})
+    def delPossibleValue(self,ps):
+        if(type(ps)==list):
+            for k in ps:
+                assert (k<10 and k>0), "please del number between 1 to 9"
+                self.possibleValue.update({k:0})
+        elif(type(ps)== int):
+            assert (ps<10 and ps>0), "please del number between 1 to 9"
+            self.possibleValue.update({ps:0})
     def removePossibleValue(self,ps):
         if(type(ps)==list):
             for i in ps:
                 self.possibleValue.pop(i)
         elif(type(ps)== int):
             self.possibleValue.pop(ps)
-    def __updatePossibleValue(self):
-        for p in self.possibleValue:
-            if(self.possibleValue[p]==0):
-                self.possibleValue.pop(p)
-        if(len(self.possibleValue)==1):
-            v=self.possibleValue.keys()
-            self.setValue(v.pop())
     def getPossibleValue(self):
-        self.__updatePossibleValue()
         return self.possibleValue
             
 
     def isFinish(self):
         return (self.getValue() != 0)
+    def printPossibleValue(self):
+        print self.possibleValue.keys()
