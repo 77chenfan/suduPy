@@ -43,6 +43,7 @@ class Sudo(object):
                 posvalue={}
                 if(v!=0):
                     one.setValue(v)
+                    one.setPossibleValue()
                     self.rowsquare[i].addPossibleValue(v)
                     self.colunmsquare[j].addPossibleValue(v)
                     self.blocksquare[blocknum].addPossibleValue(v)
@@ -57,9 +58,12 @@ class Sudo(object):
     #                if(i == j):
     #                    biassquare[0].addPossibleValue(v)
     #                elif(8== (i+j)):
-    #                    biassquare[1].addPossibleValue(v)
-                j=j+1
+    #                    biassquare[1].addPossibleValue(v)               
                 self.basesquare[i].append(one)
+                self.rowsquare[i].addBaseSquare(one)
+                self.colunmsquare[j].addBaseSquare(one)
+                self.blocksquare[blocknum].addBaseSquare(one)
+                j=j+1
             i=i+1
             
         self.printResult()
@@ -72,11 +76,11 @@ class Sudo(object):
         run=2
         while(run):
             run=run-1
-            if(self.count >self.basecount):
-                run=1
             time=time+1
             self.basecount=self.count
             self.checkPossibleValue()
+            if(self.count >self.basecount):
+                run=run+1
             print "run %d times, the base is %d, now numbers is %d"%(time,self.basecount,self.count)
 
     def checkPossibleValue(self):
@@ -84,29 +88,39 @@ class Sudo(object):
             for j in range(9):
                 v=self.basesquare[i][j].getValue()
                 blocknum=j/3+(i/3)*3
-                pvs=self.rowsquare[2].getPossibleValue()
                 posvalue={}
                 if(v!=0):
                     self.rowsquare[i].addPossibleValue(v)
                     self.colunmsquare[j].addPossibleValue(v)
                     self.blocksquare[blocknum].addPossibleValue(v)
                 else:
-                    posvalue=copy.copy(self.rowsquare[i].getPossibleValue())
-                    posvalue.update(self.colunmsquare[j].getPossibleValue())
-                    posvalue.update(self.blocksquare[blocknum].getPossibleValue())
+                    rowPoss=copy.copy(self.rowsquare[i].getPossibleValue())
+                    columnPoss=copy.copy(self.colunmsquare[j].getPossibleValue())
+                    blockPoss=copy.copy(self.blocksquare[blocknum].getPossibleValue())
+                    
+                    posvalue.update(rowPoss)
+                    posvalue.update(columnPoss)
+                    posvalue.update(blockPoss)
                     self.basesquare[i][j].delPossibleValue(posvalue.keys())
                     value=self.basesquare[i][j].updatePossibleValue()
                     if(value!=0):
                         print (i,j)
                         self.count=self.count+1
-                        print self.rowsquare[i].getPossibleValue()
-                        print self.colunmsquare[j].getPossibleValue()
-                        print self.blocksquare[blocknum].getPossibleValue()
-                        print posvalue
+#                        print self.rowsquare[i].getPossibleValue()
+#                        print self.colunmsquare[j].getPossibleValue()
+#                        print self.blocksquare[blocknum].getPossibleValue()
+#                        print posvalue
                         self.rowsquare[i].addPossibleValue(value)
                         self.colunmsquare[j].addPossibleValue(value)
                         self.blocksquare[blocknum].addPossibleValue(value)
-                        print "get a number"                   
+                        print "get a number"
+                    else:
+                        sb=self.blocksquare[blocknum].Excludenumber((i%3)*3+j%3)
+                        if(sb==0):
+                            sb=self.rowsquare[i].Excludenumber(j)
+                        if(sb==0):
+                            sb=self.colunmsquare[j].Excludenumber(i)
+                        self.count=self.count+sb
     def printInfo(self):
         self.printResult()
         print "the base is %d, now numbers is %d"%(self.basecount,self.count)

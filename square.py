@@ -37,16 +37,22 @@ class square(object):
         if(type(ps)==list):
             for k in ps:
                 assert (k<10 and k>0), "please del number between 1 to 9"
-                self.possibleValue.update({k:0})
+                #self.possibleValue.update({k:0})
+                if( k in self.possibleValue.keys()):
+                    self.possibleValue.pop(k)
         elif(type(ps)== int):
             assert (ps<10 and ps>0), "please del number between 1 to 9"
-            self.possibleValue.update({ps:0})
+            #self.possibleValue.update({ps:0})
+            if( k in self.possibleValue.keys()):            
+                self.possibleValue.pop(k)
     def removePossibleValue(self,ps):
         if(type(ps)==list):
             for i in ps:
                 self.possibleValue.pop(i)
         elif(type(ps)== int):
             self.possibleValue.pop(ps)
+    def setPossibleValue(self):
+        self.possibleValue={self.value:1}
     def getPossibleValue(self):
         return self.possibleValue
             
