@@ -136,3 +136,31 @@ class Sudo(object):
     
     def printCount(self):
         print "Now sudo has filled %d numbers"%self.count
+    def ExculdeNumber(self,i,j):
+        (r1,r2)=self.caculateNumber(i)
+        (c1,c2)=self.caculateNumber(j)
+#        print (r1,r2)
+#        print "caculate number"
+#        print (c1,c2)
+        colposvalue={}
+        rowposvalue={}
+        for k in self.rowsquare[r1].getPossibleValue().keys():
+            if(k in self.rowsquare[r2].getPossibleValue().keys()):
+                rowposvalue.update({k:1})
+        for k in self.colunmsquare[c1].getPossibleValue().keys():
+            if(k in self.colunmsquare[c2].getPossibleValue().keys()):
+                colposvalue.update({k:1})
+        for k in rowposvalue.keys():
+            if(k not in colposvalue.keys()):
+                rowposvalue.pop(k)
+        return rowposvalue
+        
+    def caculateNumber(self,m):
+        v=m%3
+        if(v==0):
+            return(m+1,m+2)
+        elif(v==1):
+            return(m-1,m+1)
+        elif(v==2):
+            return(m-2,m-1)
+        
