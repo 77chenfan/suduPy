@@ -52,7 +52,7 @@ class square(object):
         elif(type(ps)== int):
             self.possibleValue.pop(ps)
     def setPossibleValue(self):
-        self.possibleValue={self.value:1}
+        self.possibleValue={}
     def getPossibleValue(self):
         return self.possibleValue
             
@@ -60,4 +60,4 @@ class square(object):
     def isFinish(self):
         return (self.getValue() != 0)
     def printPossibleValue(self):
-        print self.possibleValue.keys()
+        print "the pos is " + str(self.getPos()) +" and "+ str(self.possibleValue.keys())

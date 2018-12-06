@@ -30,6 +30,7 @@ class baseSquare(sq.square):
             print self.getPos()
             print v
             self.setValue(v)
+            self.setPossibleValue()
             return v
         else:
             return 0
