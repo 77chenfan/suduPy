@@ -14,7 +14,7 @@ class keyEle():
         self.size=0
         self.sum=0
     def __str__(self):
-        return str(self.value)
+        return str(self.key)+":"+str(self.value)
     def add(self,ele):
         self.value.append(ele)
         self.size +=1
@@ -108,6 +108,8 @@ class comNineSquare(basesquare.baseSquare):
     def addPossibleValue(self,ps):
         super(comNineSquare,self).addPossibleValue(ps)
         #self.updateStillNeedValue(ps)
+        for sq in self.squares:
+            sq.delPossibleValue(ps)
         
     def printStillNeedValue(self):
         print self.stillNeedValue

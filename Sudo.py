@@ -70,10 +70,10 @@ class Sudo(object):
                 j=j+1
             i=i+1
             
-        self.printResult()
-        self.printNineSquare(self.rowsquare)
-        self.printNineSquare(self.colunmsquare)
-        self.printNineSquare(self.blocksquare)
+        #self.printResult()
+        #self.printNineSquare(self.rowsquare)
+        #self.printNineSquare(self.colunmsquare)
+        #self.printNineSquare(self.blocksquare)
         self.printInfo()
     def startGame(self):
         time=0
@@ -171,8 +171,8 @@ class Sudo(object):
                         
                     pos2.update(tempos)
             nineSquare.stillNeedValue = self.judeNineSquare(posStat)
-            #fixvalues= self.findSameEle(nineSquare.stillNeedValue)
-            #self.processFixValues(nineSquare,fixvalues)
+            fixvalues= self.findSameEle(nineSquare.stillNeedValue)
+            self.processFixValues(nineSquare,fixvalues)
             
             c=0
             for k in pos1.keys():
@@ -311,23 +311,27 @@ class Sudo(object):
         return result
     def processFixValues(self,nineSquare,eleDict):
         for eleList in eleDict.values():
-            print "the process fix value %d"%len(eleList)
-            if(len(eleList) == 2):
+            print "the process fix value %s at %s"%(str(eleList),str(nineSquare.getPos()))
+            if(len(eleList) == 2 and eleList[0].size == 2):
                 k1=eleList[0].key
                 k2=eleList[1].key
                 sq1=nineSquare.squares[eleList[0].value[0]]
                 sq2=nineSquare.squares[eleList[0].value[1]]
+                sq1.setPossibleValue()
+                sq1.addPossibleValue([k1,k2])
+                sq2.setPossibleValue()
+                sq2.addPossibleValue([k1,k2])
                 if(sq1.pox == sq2.pox):
                     for n in range(9):
                         if(n!=sq1.poy-1 and n!=sq2.poy-1):
                             self.rowsquare[sq1.pox-1].squares[n].delPossibleValue([k1,k2])
-                        if(sq1.poy/3+(sq1.pox/3)*3 == sq2.poy/3+(sq2.pox/3)*3 and  n !=((sq1.pox-1)%3)*3+(sq1.poy-1)%3 and n!=((sq2.pox-1)%3)*3+(sq2.poy-1)%3):
+                        if((sq1.poy-1)/3== (sq2.poy-1)/3 and  n !=((sq1.pox-1)%3)*3+(sq1.poy-1)%3 and n!=((sq2.pox-1)%3)*3+(sq2.poy-1)%3):
                             self.blocksquare[(sq1.poy-1)/3+((sq1.pox-1)/3)*3].squares[n].delPossibleValue([k1,k2])
                 elif(sq1.poy == sq2.poy):
-                    for n in range(9):
+                   for n in range(9):
                         if(n!=sq1.pox-1 and n!=sq2.pox-1):
-                            self.colunmsquare[sq1.poy-1].squares[n].delPossibleValue([k1,k2])
-                        if(sq1.poy/3+(sq1.pox/3)*3 == sq2.poy/3+(sq2.pox/3)*3 and  n !=((sq1.pox-1)%3)*3+(sq1.poy-1)%3 and n!=((sq2.pox-1)%3)*3+(sq2.poy-1)%3):
+                           self.colunmsquare[sq1.poy-1].squares[n].delPossibleValue([k1,k2])
+                        if((sq1.pox-1)/3 == (sq2.pox-1)/3 and  n !=((sq1.pox-1)%3)*3+(sq1.poy-1)%3 and n!=((sq2.pox-1)%3)*3+(sq2.poy-1)%3):
                             self.blocksquare[(sq1.poy-1)/3+((sq1.pox-1)/3)*3].squares[n].delPossibleValue([k1,k2])
 
 

@@ -43,8 +43,8 @@ class square(object):
         elif(type(ps)== int):
             assert (ps<10 and ps>0), "please del number between 1 to 9"
             #self.possibleValue.update({ps:0})
-            if( k in self.possibleValue.keys()):            
-                self.possibleValue.pop(k)
+            if( ps in self.possibleValue.keys()):
+                self.possibleValue.pop(ps)
     def removePossibleValue(self,ps):
         if(type(ps)==list):
             for i in ps:
